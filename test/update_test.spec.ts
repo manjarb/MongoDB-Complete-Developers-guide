@@ -21,7 +21,7 @@ describe("Update a User", () => {
         mongoose.connection.collections.users.drop();
       }
 
-      joe = new User({ name: NAME, postCount: 1 });
+      joe = new User({ name: NAME, likes: 1 });
       await joe.save();
       done();
     });
@@ -59,12 +59,12 @@ describe("Update a User", () => {
   });
 
   it("A user can have their post count increase by 1", async () => {
-    await User.updateMany({name: NAME}, { $inc: {postCount: 10} });
-    const user = await User.findOne({name: NAME})
+    await User.updateMany({ name: NAME }, { $inc: { likes: 10 } });
+    const user = await User.findOne({ name: NAME });
     if (user) {
-      expect(user?.postCount).to.equal(11)
+      expect(user?.likes).to.equal(11);
     }
-  })
+  });
 
   async function assertName(name: string) {
     const users = await User.find();

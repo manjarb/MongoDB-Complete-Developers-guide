@@ -23,7 +23,6 @@ describe("Subdocuments", () => {
 
       joe = new User({
         name: NAME,
-        postCount: 1,
         posts: [{ title: "PostTitle" }],
       });
       await joe.save();
