@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 import { describe } from "mocha";
 import { expect } from "chai";
 
-const NAME = "Joe";
+const NAME = "joe";
 
 describe("Creating Records", () => {
-  let joe: IUser;
+  let joe: IUser, maria: IUser, alex: IUser, zach: IUser;
   before(async () => {
     await dbConnect();
   });
@@ -22,8 +22,15 @@ describe("Creating Records", () => {
       }
 
       joe = new User({ name: NAME });
-      await joe.save();
-      done();
+      maria = new User({ name: "maria" });
+      alex = new User({ name: "alex" });
+      zach = new User({ name: "zach" });
+
+      Promise.all([joe.save(), maria.save(), alex.save(), zach.save()]).then(
+        () => {
+          done();
+        }
+      );
     });
   });
 
@@ -37,5 +44,13 @@ describe("Creating Records", () => {
     if (user) {
       expect(user.name).to.equal(joe.name);
     }
+  });
+
+  it("can skip and limit the result set", async () => {
+    const users = await User.find({}).sort({ name: 1 }).skip(1).limit(2);
+    console.log(users, " eo");
+    expect(users.length).to.equal(2);
+    expect(users[0].name).to.equal("joe");
+    expect(users[1].name).to.equal("maria");
   });
 });

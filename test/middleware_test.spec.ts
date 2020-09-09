@@ -33,7 +33,7 @@ describe("Middleware", () => {
     });
   });
 
-  it.only("users clean up dangling blogposts on remove", async () => {
+  it("users clean up dangling blogposts on remove", async () => {
     await joe.remove();
     const count = await BlogPost.countDocuments();
     expect(count).to.equal(0);
