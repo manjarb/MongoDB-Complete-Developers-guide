@@ -1,8 +1,10 @@
+import { PostSchema, IPost } from "./post";
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IUser extends Document {
   name: string;
   postCount?: number;
+  posts: IPost[];
 }
 
 const UserSchema: Schema<IUser> = new Schema({
@@ -15,6 +17,7 @@ const UserSchema: Schema<IUser> = new Schema({
     required: [true, "Name is required."],
   },
   postCount: Number,
+  posts: [PostSchema],
 });
 
 export const User = mongoose.model<IUser>("user", UserSchema);
