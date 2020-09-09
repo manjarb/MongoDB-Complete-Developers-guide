@@ -47,7 +47,7 @@ describe("Association", () => {
     }
   });
 
-  it.only("save a full relation graph", async () => {
+  it("save a full relation graph", async () => {
     const user = await User.findOne({ name: "Joe" }).populate({
       path: "blogPosts",
       populate: {
@@ -59,7 +59,7 @@ describe("Association", () => {
         },
       },
     });
-    console.log(user?.blogPosts[0].comments[0], " :user");
+
     expect(user?.name).to.equal("Joe");
     expect(user?.blogPosts[0].title).to.equal("Jis is great");
     expect(user?.blogPosts[0].comments[0].content).to.equal(
