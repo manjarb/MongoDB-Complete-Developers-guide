@@ -1,11 +1,13 @@
 import { PostSchema, IPost } from "./post";
 import mongoose, { Schema, Document } from "mongoose";
+import { IBlogPost } from "./blogPost";
 
 export interface IUser extends Document {
   name: string;
   postCount?: number;
   posts: IPost[];
   likes: number;
+  blogPosts: IBlogPost[];
 }
 
 const UserSchema: Schema<IUser> = new Schema({
@@ -19,6 +21,12 @@ const UserSchema: Schema<IUser> = new Schema({
   },
   posts: [PostSchema],
   likes: Number,
+  blogPosts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "blogPost",
+    },
+  ],
 });
 
 UserSchema.virtual("postCount").get(function (this: IUser) {

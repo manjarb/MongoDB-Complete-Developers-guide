@@ -18,7 +18,7 @@ describe("Deleting a User", () => {
     });
     collections.next(async (err, collInfo) => {
       if (collInfo) {
-        mongoose.connection.collections.users.drop();
+        await mongoose.connection.collections.users.drop();
       }
 
       joe = new User({ name: NAME });
